@@ -3,7 +3,7 @@
 
 IFS='/'
 read -ra ARR <<< "$1"
-IFS="xD"
+IFS=""
 
 name=${ARR[-1]}
 mkdir $name
@@ -27,7 +27,7 @@ def $name(lines):
 
 
 def main():
-    lines = [line for line in sys.stdin]
+    lines = [line.strip() for line in sys.stdin]
     print($name(lines))
 main()"
 echo $code > $name".py"
