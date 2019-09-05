@@ -1,32 +1,40 @@
 import sys
+from itertools import combinations
 
 def zagrade(lines):
     expression = lines[0]
-    print(expression)
+    brackets = find_brackets(expression)
+    combos = []
+    for i in range(1, len(brackets)+1):
+        combos.append(list(combinations(brackets, i)))
 
-    numBraces = expression.count("(")
-    innerLeftBrace = findNth(expression, numBraces, "(")
-    innerRightBrace = findNth(expression, 1, ")")
-    print(innerRightBrace)
-    print(removeBrace(expression, innerLeftBrace, innerRightBrace))
+    return_array = []
+    for i in combos:
+        # print(i)
+        pass
+        for j in i:
+            # print(j)
+            current_exp = expression
+            for x in j:
+                current_exp = list(current_exp)
+                current_exp[x[0]] = ' '
+                current_exp[x[1]] = ' '
+            current_exp = "".join(current_exp).replace(" ", "")
+            return_array.append(current_exp)
 
+    return "\n".join(sorted(return_array))
 
-def findNth(expression, n, findChar):
-    counter = 1
-    for charIndex in range(len(expression)):
-        if expression[charIndex] == findChar:
-            if counter == n:
-                return charIndex
-            else:
-                counter += 1
-    return -1
-
-def removeBrace(expression, leftBrace, rightBrace):
-    returnString = expression
-    returnString = returnString[:leftBrace] + returnString[leftBrace+1:]
-    returnString = returnString[:rightBrace-1] + returnString[rightBrace:]
-    return returnString
-
+def find_brackets(expression):
+    brackets = []
+    used = []
+    for i in (range(len(expression))):
+        if expression[i] == '(':
+            for j in reversed(range(i+1, len(expression))):
+                if expression[j] == ')' and j not in used:
+                    brackets.append((i, j))
+                    used.append(j)
+                    break
+    return brackets
 
 def main():
     lines = [line.strip() for line in sys.stdin]
