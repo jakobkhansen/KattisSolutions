@@ -11,7 +11,6 @@ def zagrade(lines):
     return_array = []
     for i in combos:
         # print(i)
-        pass
         for j in i:
             # print(j)
             current_exp = expression
@@ -22,15 +21,21 @@ def zagrade(lines):
             current_exp = "".join(current_exp).replace(" ", "")
             return_array.append(current_exp)
 
+    return_array = list(set(return_array))
     return "\n".join(sorted(return_array))
 
 def find_brackets(expression):
     brackets = []
     used = []
-    for i in (range(len(expression))):
+    for i in range(len(expression)):
         if expression[i] == '(':
-            for j in reversed(range(i+1, len(expression))):
-                if expression[j] == ')' and j not in used:
+            right_counter = 0
+            for j in range(i+1, len(expression)):
+                if expression[j] == '(':
+                    right_counter += 1
+                elif expression[j] == ')' and right_counter > 0:
+                    right_counter -= 1
+                elif expression[j] == ')' and j not in used:
                     brackets.append((i, j))
                     used.append(j)
                     break
