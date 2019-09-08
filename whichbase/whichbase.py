@@ -5,15 +5,11 @@ def whichbase(lines):
     return_string = ""
     for line in lines:
         return_string += line[0] + " "
+
         decimal = line.split(" ")[1]
-        try:
-            octal = int(decimal, 8)
-        except:
-            octal = 0
-        try:
-            hexa = int(decimal, 16)
-        except:
-            hexa = 0
+        octal = int(decimal, 8) if all([int(num) < 8 for num in decimal]) else 0
+        hexa = int(decimal, 16)
+
         array = [octal, int(decimal), hexa]
         return_string += " ".join([str(x) for x in array]) + "\n"
     return return_string.strip()
