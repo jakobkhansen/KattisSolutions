@@ -13,9 +13,10 @@ mkdir samples
 cd samples
 sampleslink="/file/statement/samples.zip"
 samples=$1$sampleslink
-wget -q $samples
+curl $samples --output samples.zip
 
-unzip -qq samples.zip
+echo "unzipped"
+unzip samples.zip
 rm -rf samples.zip
 cd ..
 
