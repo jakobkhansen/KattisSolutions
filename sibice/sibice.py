@@ -1,17 +1,21 @@
 import sys
+import math
 
 def sibice(lines):
-    w = int(lines[0].split(" ")[1])
-    h = int(lines[0].split(" ")[2])
+    retString = []
+    nums = [int(x) for x in lines[0].split(" ")]
+    hyp = math.sqrt((nums[1]**2) + (nums[2]**2))
 
-    streng = []
     for line in lines[1:]:
-        if int(line) <= w or int(line) <= h:
-            streng.append("DA")
+        num = int(line.split(" ")[0])
+        if num <= hyp:
+            retString.append("DA")
         else:
-            streng.append("NE")
+            retString.append("NE")
 
-    return "\n".join(streng)
+    return "\n".join(retString)
+
+
 
 
 def main():
