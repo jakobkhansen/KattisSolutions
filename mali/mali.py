@@ -1,37 +1,47 @@
 import sys
+def countingSort(array, maxValue):
+    count_arr = [0]*maxValue
+
+    for i in array:
+        count_arr[i] += 1
+
+    index = 0
+    for i in range(len(count_arr)):
+        for _ in range(count_arr[i]):
+            array[index] = i
+            index += 1
+
 
 def mali(lines):
-    min_a = -1
-    min_b = -1
+    left = []
+    right = []
+    for a,b in [map(int, x.split()) for x in lines[1:]]:
+        left.append(a)
+        right.append(b)
 
-    max_a = 0
-    max_b = 0
+        countingSort(left, 100)
+        countingSort(right, 100)
 
-    
-    retString = ""
+        largestMinPair = 0
 
-    for line in lines[1:]:
-        nums = [int(x) for x in line.split(" ")]
+        j = 0
+        k = len(left) - 1
 
-        min_a = nums[0] if (min_a == -1) or nums[0] < min_a else min_a
-        min_b = nums[1] if (min_b == -1) or nums[1] < min_b else min_b
+        while (k >= 0):
+            print("Candidate: {} {}".format(left[j], right[k]))
+            candidate = left[j] + right[k]
+            print(candidate)
+            if candidate > largestMinPair:
+                largestMinPair = candidate
+            j += 1
+            k -= 1
 
-        max_a = nums[0] if max_a < nums[0] else max_a
-        max_b = nums[1] if max_b < nums[1] else max_b
-
-        retString += findMinCombo(min_a, min_b, max_a, max_b) + "\n"
-
-    return retString.strip()
+        print(largestMinPair)
 
 
 
-def findMinCombo(min_a, min_b, max_a, max_b):
-    pot1 = min_a + max_b
-    pot2 = min_b + max_a
-
-    return str(pot1) if pot1 > pot2 else str(pot2)
 
 def main():
     lines = [line.strip() for line in sys.stdin]
-    print(mali(lines))
+    mali(lines)
 main()
