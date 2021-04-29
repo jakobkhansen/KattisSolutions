@@ -8,5 +8,5 @@ get 2
 push_middle 1
 get 1
 get 2
-push_back 6
-push_middle 99
+push_back 9
+push_middle 10

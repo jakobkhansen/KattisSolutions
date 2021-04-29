@@ -5,17 +5,9 @@ def zebrasocelots(lines):
 
     numRounds = 0
 
-    vals = [
-        1,
-        2,
-        3,
-    ]
-
     for i,x in enumerate(reversed(pile)):
-        # print(i, x)
         if x == 0:
-            addedVal = i*i
-            # print(addedVal)
+            addedVal = 2**i
             numRounds += addedVal
 
 
