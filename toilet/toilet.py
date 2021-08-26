@@ -7,30 +7,40 @@ def toilet(lines):
     return "\n".join(adjustments)
 
 def policy_one(chars):
-    start = chars[0]
     adjustments = 0
-    if start == 'D':
-        adjustments += 1
-    for char in chars[2:]:
-        if char == 'D':
-            adjustments += 2
+    current = chars[0]
+    preferred = 'U'
+    for char in chars[1:]:
+        if current != char:
+            adjustments += 1
+            current = char
+
+        if current != preferred:
+            adjustments += 1
+            current = preferred 
+
     return str(adjustments)
 
 def policy_two(chars):
-    start = chars[0]
     adjustments = 0
-    if start == 'U':
-        adjustments += 1
-    for char in chars[2:]:
-        if char == 'U':
-            adjustments += 2
+    current = chars[0]
+    preferred = 'D'
+    for char in chars[1:]:
+        if current != char:
+            adjustments += 1
+            current = char
+
+        if current != preferred:
+            adjustments += 1
+            current = preferred 
+
     return str(adjustments)
 
 def policy_three(chars):
     current = chars[0]
     adjustments = 0
 
-    for char in chars:
+    for char in chars[1:]:
         if char != current:
             adjustments += 1
             current = char

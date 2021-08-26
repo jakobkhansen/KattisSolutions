@@ -28,12 +28,12 @@ def boxes(lines):
 
     for i,index in enumerate([int(x) for x in lines[1].split(" ")]):
         if index != 0:
-            boxes.get(index).children.append(boxes.get(i+1))
+            boxes[index].children.append(boxes.get(i+1))
 
     for i in range(3, len(lines)):
         used = {}
         nums = [int(x) for x in lines[i].split(" ")[1:]]
-        curr_boxes = [boxes.get(x) for x in nums]
+        curr_boxes = [boxes[x] for x in nums]
         num_boxes = [x.count(used) for x in curr_boxes]
         print(sum(num_boxes))
     # print(boxes)

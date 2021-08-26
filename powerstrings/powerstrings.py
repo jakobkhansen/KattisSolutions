@@ -1,5 +1,4 @@
 import sys
-from queue import PriorityQueue
 
 def powerstrings():
     for case in sys.stdin:
@@ -20,7 +19,6 @@ def powerstrings():
 
 
         for currentSize in divisors:
-            finished = True
             string = case[:currentSize]*(length//currentSize)
             if string == case:
                 print(length//currentSize)
