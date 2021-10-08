@@ -1,8 +1,8 @@
 import sys
 
 def addtwonumbers(lines):
-    nums = [int(x) for x in lines[0].split()]
-    return sum(nums)
+    pass
+
 
 
 def main():

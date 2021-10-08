@@ -12,7 +12,7 @@ def kitten(lines):
 
     current = kitty
     while current is not None:
-        print(current)
+        print(current, end=" ")
         current = parents.get(current, None)
 
 
