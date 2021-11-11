@@ -15,28 +15,20 @@ def hopscotch50():
         if len(location) == 0:
             return -1
 
-    shortest = sys.maxsize
 
-    def rec(index, current_pos, path_length):
-        nonlocal shortest
-
-        if index == k:
-            if path_length < shortest:
-                shortest = path_length
-            return
-        next_locations = locations[index]
-        for next_pos in next_locations:
-            new_distance = path_length + distance(current_pos, next_pos)
-            if new_distance < shortest:
-                rec(index+1, next_pos, new_distance)
+    memory = {}
 
 
-    for start_pos in locations[0]:
-        rec(1, start_pos, 0)
-        if shortest == k:
-            break
+    for location in locations[-1]:
+        memory[location] = 0
 
-    return shortest
+    for i in range(len(locations)-2, -1, -1):
+        for location in locations[i]:
+            memory[location] = min([distance(location, x) + memory[x] for x in locations[i+1]])
+
+
+
+    return min([memory[x] for x in locations[0]])
 
 def distance(p1, p2):
     x1,y1 = p1

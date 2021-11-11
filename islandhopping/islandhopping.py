@@ -1,3 +1,5 @@
+import math
+from queue import PriorityQueue
 import sys
 
 class UnionFind:
@@ -38,18 +40,42 @@ class UnionFind:
     def __repr__(self):
         return str(self.array)
 
+
+def kruskals(m,positions):
+    uf = UnionFind(m)
+    mapping = {positions[x]:x for x in range(m)}
+    pq = PriorityQueue()
+
+    for i in range(len(positions)):
+        for j in range(i+1, len(positions)):
+            p1 = positions[i]
+            p2 = positions[j]
+            pq.put((distance(p1,p2), (p1,p2)))
+
+    distance_sum = 0
+    num_edges = 0
+
+    while num_edges < m-1:
+        dist,(p1,p2) = pq.get()
+        if uf.find(mapping[p1]) != uf.find(mapping[p2]):
+            distance_sum += dist
+            num_edges += 1
+            uf.union(mapping[p1], mapping[p2])
+    print(distance_sum)
+            
+
+
+
+
+def distance(p1, p2):
+    return math.sqrt( ((p1[0]-p2[0])**2)+((p1[1]-p2[1])**2) )
+
 def main():
-    n,q = [int(x) for x in sys.stdin.readline().split()]
-    uf = UnionFind(n)
-
-    for query in sys.stdin:
-        query = query.split()
-        a, b = int(query[1]),int(query[2])
-
-        if query[0] == '?':
-            result = 'yes' if uf.find(a) == uf.find(b) else 'no'
-            print(result)
-        else:
-            uf.union(a, b)
+    n = int(input())
+    for i in range(n):
+        m = int(input())
+        positions = []
+        for j in range(m):
+            positions.append(tuple([float(x) for x in input().split()]))
+        kruskals(m,positions)
 main()
-
