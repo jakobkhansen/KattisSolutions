@@ -27,13 +27,9 @@ cd ..
 touch $name".py"
 code="import sys
 
-def $name(lines):
+def $name():
     pass
 
-
-def main():
-    lines = [line.strip() for line in sys.stdin]
-    print($name(lines))
-main()"
+print($name())"
 echo $code > $name".py"
 echo "Problem extracted to ./$name/"
