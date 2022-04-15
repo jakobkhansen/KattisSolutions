@@ -2,11 +2,14 @@ import sys
 import math
 
 def pyramids():
-    n = int(input())
+    blocks = int(input())
+    curr_layer = 1
 
-    res = math.floor(math.sqrt(math.sqrt(n)))
+    while curr_layer**2 <= blocks:
+        blocks -= curr_layer**2
+        curr_layer += 2
 
-    return res if res % 2 == 1 else res-1
+    return (curr_layer-1) // 2
 
 
 

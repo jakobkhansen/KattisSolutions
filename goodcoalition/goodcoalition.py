@@ -1,0 +1,4 @@
+def goodcoalition():
+    pass
+
+goodcoalition()
