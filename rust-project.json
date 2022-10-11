@@ -1,0 +1,16 @@
+{
+  "crates": [
+    {
+      "root_module": ".",
+      "source": {
+        "include_dirs": ["./**/*"],
+        "exclude_dirs": []
+      },
+      "edition": "2021",
+      "deps": [],
+      "cfg": [],
+      "env": {},
+      "is_proc_macro": false
+    }
+  ]
+}
