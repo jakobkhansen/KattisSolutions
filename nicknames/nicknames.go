@@ -1,25 +1,42 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+	"strconv"
+)
 
 func main() {
-	var num_names int
-	fmt.Scanf("%d\n", &num_names)
-	fmt.Println(num_names)
+	reader := bufio.NewReader(os.Stdin)
+	s, _ := reader.ReadString('\n')
+
+	num_names, _ := strconv.Atoi(s[:len(s)-1])
+
 	var names []string = make([]string, num_names)
 	for i := 0; i < num_names; i++ {
-		fmt.Scanln(&names[i])
+		names[i], _ = reader.ReadString('\n')
+		names[i] = names[i][:len(names[i])-1]
 	}
-	fmt.Printf("%v\n", names)
-	var num_nicks int
 
-	fmt.Scanf("%d\n", &num_nicks)
+	t, _ := reader.ReadString('\n')
+	num_nicks, _ := strconv.Atoi(t[:len(t)-1])
+
 	var nicks []string = make([]string, num_nicks)
 	for i := 0; i < num_nicks; i++ {
-		fmt.Scanln(&nicks[i])
+		nicks[i], _ = reader.ReadString('\n')
+		nicks[i] = nicks[i][:len(nicks[i])-1]
 	}
-	fmt.Printf("%v\n", nicks)
-	build_trie(names)
+	root := build_trie(names)
+
+	for _, nick := range nicks {
+		result := access_trie(root, nick)
+		if result == nil {
+			fmt.Printf("0\n")
+		} else {
+			fmt.Printf("%d\n", result.num_finished)
+		}
+	}
 }
 
 type node struct {
@@ -27,41 +44,41 @@ type node struct {
 	num_finished int
 }
 
-func (n node) String() string {
-	out := "node{map{"
-	for char, elem := range n.children {
-		out += string(char)
-		out += ": " + elem.String()
-	}
-
-	out += "}, " + fmt.Sprint(n.num_finished) + "}"
-
-	return out
-}
-
-func build_trie(names []string) {
+func build_trie(names []string) *node {
 	root := node{children: map[byte]*node{}, num_finished: 0}
 	for _, name := range names {
 		recurse(&root, name)
 	}
-	fmt.Printf("%v\n", root)
+	return &root
 }
 
 func recurse(curr *node, name string) {
 
-	fmt.Println(name)
 	if len(name) == 0 {
 		return
 	}
 
 	var prefix = name[0]
 	if _, ok := curr.children[prefix]; !ok {
-		fmt.Println("Creating child")
 		new_child := node{children: map[byte]*node{}, num_finished: 0}
 		curr.children[prefix] = &new_child
 	}
 	child := curr.children[prefix]
 	child.num_finished += 1
-	fmt.Printf("%v\n", child)
 	recurse(child, name[1:])
+}
+
+func access_trie(root *node, name string) *node {
+	curr := root
+	index := 0
+	for index < len(name) {
+		child, ok := curr.children[name[index]]
+		if !ok {
+			return nil
+		}
+		curr = child
+		index++
+	}
+
+	return curr
 }
