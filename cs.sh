@@ -24,6 +24,7 @@ unzip samples.zip
 rm -rf samples.zip
 cd ..
 code="using System;
+using System.Collections.Generic;
 using System.Linq;
 
 void Main()
@@ -35,5 +36,5 @@ Main();
 "
 
 touch $name".cs"
-echo $code > $name".py"
+echo $code > $name".cs"
 echo "Problem extracted to ./$name/"
